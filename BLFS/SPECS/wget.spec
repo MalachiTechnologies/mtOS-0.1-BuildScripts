@@ -37,7 +37,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/*
 %{_datadir}/locale*
 %{_mandir}/*/*
-%{_infodir}/*
+%{_infodir}/wget.info.gz
 
 
 

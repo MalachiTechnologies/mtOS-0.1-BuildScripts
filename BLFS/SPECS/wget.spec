@@ -1,57 +1,43 @@
-Summary:	A network utility to retrieve files from the Web
-Name:		wget
-Version:	1.21.4
-Release:	1%{?dist}
-License:	GPLv3
-URL:		http://www.gnu.org/software/wget/wget.html
-Group:		BLFS/NetworkingPrograms
+Name:           wget
+Version:        1.21.4
+Release:        1%{?dist}
+Summary:        The Wget package contains a utility useful for non-interactive downloading of files from the Web.
 Vendor:		Malachi Software (a subsidary of Malachi Technologies)
 Distribution:	mtOS
-Source0:	ftp://ftp.gnu.org/gnu/%{name}/%{name}-%{version}.tar.xz
+Group:          Applications/System
+License:        GPLv3
+URL:            https://www.gnu.org/software/wget/
+Source0:        ftp://ftp.gnu.org/gnu/wget/wget-1.21.4.tar.gz
+
 %description
-The Wget package contains a utility useful for non-interactive 
-downloading of files from the Web.
+GNU Wget is a free utility for non-interactive download of files from
+the Web.  It supports HTTP, HTTPS, and FTP protocols, as well as
+retrieval through HTTP proxies.
+
 %prep
 %setup -q
 
+
 %build
-./configure \
-	CFLAGS="%{optflags}" \
-	CXXFLAGS="%{optflags}" \
-	--disable-silent-rules \
-	--prefix=%{_prefix} \
-	--bindir=%{_bindir} \
-	--libdir=%{_libdir} \
-	--sysconfdir=/etc \
-	--with-ssl=openssl
+%configure --with-ssl=openssl
 make %{?_smp_mflags}
+
 %install
-[ %{buildroot} != "/"] && rm -rf %{buildroot}/*
-make DESTDIR=%{buildroot} install
-install -vdm 755 %{buildroot}/etc
-cat >> %{buildroot}/etc/wgetrc <<-EOF
-#	default root certs location
-	ca_certificate=/etc/ssl/certs/ca-bundle.crt
-EOF
-rm -rf %{buildroot}/%{_infodir}
-%find_lang %{name}
-%{_fixperms} %{buildroot}/*
-%check
-make -k check |& tee %{_specdir}/%{name}-check-log || %{nocheck}
+rm -rf $RPM_BUILD_ROOT
+make install DESTDIR=$RPM_BUILD_ROOT
+
+
 %clean
-rm -rf %{buildroot}/*
-%files -f %{name}.lang
-%defattr(-,root,root)
+rm -rf $RPM_BUILD_ROOT
+
+
+%files
 %config(noreplace) /etc/wgetrc
 %{_bindir}/*
-%{_mandir}/man1/*
-%changelog
-* Sat Jan 13 2024 Malachi Snyder <kmsnyder@malachi.technology> 1.21.4
-- Adapted .spec for mtOS, and updated to 1.21.4
-- Changed file format to .tar.gz to be in line with the current source packaging
+%{_datadir}/locale*
+%{_mandir}/*/*
+%{_infodir}/*
 
-*	Fri Aug 28 2015 Niels Terp <nielsterp@comhem.se> 1.16.1-1
-*	Sun Sep 01 2013 nielsterp <nielsterp@comhem.se> 1.14-1
--	Added patch
-*	Fri May 31 2013 baho-utot <baho-utot@columbus.rr.com> 1.14-1
--	Initial build.	First version
+
+
+%changelog

@@ -15,6 +15,7 @@ the Web.  It supports HTTP, HTTPS, and FTP protocols, as well as
 retrieval through HTTP proxies.
 
 %prep
+%define _unpackaged_files_terminate_build 0
 %setup -q
 
 

@@ -35,7 +35,7 @@ install -v -m755 -d $RPM_BUILD_ROOT/lib
 mv -v $RPM_BUILD_ROOT/usr/lib/libcrack.so.* $RPM_BUILD_ROOT/lib
 ln -sfv ../../lib/$(readlink $RPM_BUILD_ROOT/usr/lib/libcrack.so) $RPM_BUILD_ROOT/usr/lib/libcrack.so
 
-install -v -m644 -D $RPM_SOURCE_DIR/cracklib-words-2.9.6.gz \
+install -v -m644 -D $RPM_SOURCE_DIR/cracklib-words-2.9.11.gz \
                     $RPM_BUILD_ROOT/usr/share/dict/cracklib-words.gz
 gunzip -v $RPM_BUILD_ROOT/usr/share/dict/cracklib-words.gz
 ln -v -sf cracklib-words $RPM_BUILD_ROOT/usr/share/dict/words

@@ -1,10 +1,14 @@
-Name:           linux
-Version:        6.4.12
-Release:        1%{?dist}
-Summary:        The Linux kernel
-License:        GPLv2 and Redistributable, no modification permitted
+Name:                 linux
+Version:              6.7.5
+Release:              1%{?dist}
+Summary:              The Linux kernel
+License:              GPLv2 and Redistributable, no modification permitted
 
-Source0:        https://www.kernel.org/pub/linux/kernel/v6.x/linux-%{version}.tar.xz
+Source0:              https://www.kernel.org/pub/linux/kernel/v6.x/linux-%{version}.tar.xz
+Source1:              https://github.com/anthraxx/linux-hardened/releases/download/%{version}-hardened1/linux-hardened-%{version}-hardened1.patch
+
+Patch0:               linux-hardened-%{version}-hardened1.patch
+ApplyOptionalPatch    linux-hardened-%{version}-hardened1.patch
 
 %description
 The kernel package contains the Linux kernel (vmlinuz), the core of any Linux
